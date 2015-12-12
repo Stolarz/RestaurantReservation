@@ -23,6 +23,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Restaurant_Display"
+            android:label="@string/title_activity_restaurant__display"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
