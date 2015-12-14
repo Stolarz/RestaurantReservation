@@ -11,15 +11,16 @@
         android:text="Name"/>
 
     <TextView
+        android:id="@+id/restaurantSeatsNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SeatsNumber"/>
+
+    <TextView
         android:id="@+id/restaurantTelephone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Number"/>
 
-    <TextView
-        android:id="@+id/restaurantSeatsNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SeatsNumber"/>
 
 </LinearLayout>

@@ -7,11 +7,13 @@ public class Restaurant {
     String Name;
     Number SeatsNumber;
     Number telephoneNumber;
+    String id;
 
-public Restaurant(String Name, Number SeatsNumber, Number telephoneNumber){
+public Restaurant(String Name, Number SeatsNumber, Number telephoneNumber,String id){
     this.Name = Name;
     this.SeatsNumber = SeatsNumber;
     this.telephoneNumber = telephoneNumber;
+    this.id = id;
 }
 
 }
