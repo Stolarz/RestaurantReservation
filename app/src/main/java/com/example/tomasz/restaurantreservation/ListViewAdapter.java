@@ -47,9 +47,9 @@ public class ListViewAdapter extends BaseAdapter {
         TextView resNumber = (TextView) convertView.findViewById(R.id.restaurantTelephone);
         TextView resSeats = (TextView) convertView.findViewById(R.id.restaurantSeatsNumber);
 
-        resName.setText("Nazwa"+restaurant.Name);
-        resNumber.setText("Telefon"+restaurant.telephoneNumber.toString());
-        resSeats.setText("Ilość miejsc"+restaurant.SeatsNumber.toString());
+        resName.setText("Nazwa: "+restaurant.Name);
+        resNumber.setText("Telefon: "+restaurant.telephoneNumber.toString());
+        resSeats.setText("Ilość miejsc: "+restaurant.SeatsNumber.toString());
 
 //s
     return convertView;

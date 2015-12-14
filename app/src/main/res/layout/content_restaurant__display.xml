@@ -23,6 +23,10 @@
         android:layout_height="wrap_content"
         android:text="TEST RESTAURANT NAME"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
     <TextView
         android:id="@+id/Price"
         android:layout_width="fill_parent"
