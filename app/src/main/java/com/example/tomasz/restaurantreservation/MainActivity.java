@@ -17,26 +17,29 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView _lv;
-    ArrayAdapter<String> adapter;
-    String[] parseResult = {""};
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1);
+        ArrayList<Restaurant> arrayOfRestaurants = new ArrayList<Restaurant>();
+        final ListViewAdapter adapter = new ListViewAdapter(MainActivity.this, arrayOfRestaurants);
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("RestaurantInfo");
+
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, com.parse.ParseException e) {
                 if (e == null) {
-                    parseResult = new String[list.size()];
+                    Log.e("s: ",""+list.size());
                     for (int index = 0; index < list.size(); index++) {
-                        parseResult[index] = list.get(index).getString("Name");
-                        adapter.add(parseResult[index]);
-                        Log.e(": ", parseResult[index].toString());
+                        Restaurant newRestaurant = new Restaurant(list.get(index).getString("Name"),list.get(index).getNumber("telephoneNumber"),list.get(index).getNumber("seatsAmount"));
+
+                        adapter.add(newRestaurant);
+                        //Log.e(": ", parseResult[index].toString());
                     }
                     adapter.notifyDataSetChanged();
                 } else {
@@ -45,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        _lv = (ListView)findViewById(R.id.list);
-        _lv.setAdapter(adapter);
+        ListView listView = (ListView) findViewById(R.id.list);
+       listView.setAdapter(adapter);
     }
 }
