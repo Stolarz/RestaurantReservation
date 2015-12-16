@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(currentUser !=null)
         {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             startActivity(intent);
         }
         else{
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void done(ParseUser parseUser, ParseException e) {
                     if (parseUser != null){
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
                         startActivity(intent);
                     }
                 }
