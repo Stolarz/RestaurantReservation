@@ -14,13 +14,15 @@
         android:id="@+id/btnList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lista"/>
+        android:text="Lista"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
     <Button
         android:id="@+id/btnUserMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="User"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/btnList"
+        android:layout_alignLeft="@+id/btnList"
+        android:layout_alignStart="@+id/btnList" />
 </RelativeLayout>

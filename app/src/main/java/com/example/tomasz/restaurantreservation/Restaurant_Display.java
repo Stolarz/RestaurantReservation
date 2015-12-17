@@ -28,6 +28,7 @@ import java.util.List;
 
 public class Restaurant_Display extends AppCompatActivity {
     private String resName;
+    private String address;
     private Number resSeats;
     private TextView _name;
     private TextView _seats;
@@ -63,14 +64,14 @@ public class Restaurant_Display extends AppCompatActivity {
                 public void done(List<ParseObject> list, ParseException e) {
                     resName = list.get(0).getString("Name");
                     resSeats = list.get(0).getNumber("seatsAmount").intValue() - list.get(0).getNumber("seatsTaken").intValue();
-
+                    address = list.get(0).getString("adress");
                     maxReservation = list.get(0).getNumber("maxPersonPerReservation");
                     Log.e("XXXX ",""+maxReservation);
                     lat = list.get(0).getString("Lat");
                     lon = list.get(0).getString("Lon");
 
                     _name.setText(resName);
-                    _seats.setText(resSeats.toString());
+                    _seats.setText(address);
 
                 }
             });
@@ -83,11 +84,11 @@ public class Restaurant_Display extends AppCompatActivity {
                 @Override
                 public void onClick (View view){
 
-                    Intent intent = new Intent(Restaurant_Display.this, MakeReservationActivity.class);
-                    intent.putExtra("RESTAURANT_NAME", resName);
-                    intent.putExtra("MAX", maxReservation.toString());
-                    startActivity(intent);
 
+                    Intent intent = new Intent(Restaurant_Display.this, MapsActivity.class);
+                    intent.putExtra("LAT",lat);
+                    intent.putExtra("LON",lon);
+                    startActivity(intent);
             }
 
 
@@ -102,8 +103,8 @@ public class Restaurant_Display extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(Restaurant_Display.this, MakeReservationActivity.class);
-            intent.putExtra("LAT",lat);
-            intent.putExtra("LON",lon);
+            intent.putExtra("RESTAURANT_NAME", resName);
+            intent.putExtra("MAX", maxReservation.toString());
             startActivity(intent);
         }
     };

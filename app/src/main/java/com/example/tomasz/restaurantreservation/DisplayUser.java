@@ -72,7 +72,7 @@ private String username;
 
                     EditText pass = (EditText) findViewById(R.id.PASSWORD);
                         Log.e("ASDASD: ",""+pass.getText().toString());
-                    currentUser.setPassword(pass.getText().toString());
+                        currentUser.setPassword(pass.getText().toString());
                         currentUser.saveInBackground();
                         loadActivity();
                     }

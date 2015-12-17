@@ -31,10 +31,10 @@ public class ReservationListViewAdapter extends ArrayAdapter<Reservation> {
         TextView resAmount = (TextView) convertView.findViewById(R.id.resAmount);
         TextView resTime = (TextView) convertView.findViewById(R.id.resTime);
 
-        resAmount.setText(reservation.numberOfPeople);
-        resDate.setText(reservation.Date);
-        resName.setText(reservation.RestaurantName);
-        resTime.setText(reservation.Time);
+        resAmount.setText("Ilość osób: "+reservation.numberOfPeople);
+        resDate.setText("Data: "+reservation.Date);
+        resName.setText("Nazwa restauracji: "+reservation.RestaurantName);
+        resTime.setText("Godzina: "+reservation.Time);
 
         return convertView;
 

@@ -21,7 +21,8 @@
         android:id="@+id/Restaurant_Name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="TEST RESTAURANT NAME"/>
+        android:text="TEST RESTAURANT NAME"
+        android:textAlignment="center" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -31,13 +32,16 @@
         android:id="@+id/Price"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="PRICE"/>
+        android:text="address"
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/ShowMap"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="POKAŻ NA MAPIE"/>
+        android:text="Rezerwuj"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
