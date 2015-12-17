@@ -31,7 +31,7 @@
             android:name=".Restaurant_Display"
             android:label="@string/title_activity_restaurant__display"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity android:name=".DisplayUser" />
         <activity android:name=".MenuActivity" />
         <!--
@@ -48,7 +48,8 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="@string/title_activity_maps" />
+        <activity android:name=".MakeReservationActivity"></activity>
     </application>
 
 </manifest>

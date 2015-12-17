@@ -53,9 +53,6 @@ private String username;
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
-
-
-
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.editlayout, null))
@@ -68,14 +65,11 @@ private String username;
                     EditText pass = (EditText) findViewById(R.id.PASSWORD);
                         Log.e("ASDASD: ",""+pass.getText().toString());
                     currentUser.setPassword(pass.getText().toString());
+                        currentUser.saveInBackground();
                         loadActivity();
                     }
                 })
-                .setNegativeButton("Anuluj", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
+                .setNegativeButton("Anuluj", null);
         return builder.create();
     }
 
