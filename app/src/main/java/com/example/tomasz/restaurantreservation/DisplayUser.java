@@ -11,10 +11,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisplayUser extends AppCompatActivity {
 private String username;
@@ -28,8 +36,8 @@ private String username;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadActivity();
-    }
 
+    }
     View.OnClickListener editlistener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -88,5 +96,31 @@ private String username;
         edtUsername = (TextView) findViewById(R.id.UsernameTextView);
         edtPassword.setText(email);
         edtUsername.setText(username);
+
+        ArrayList<Reservation> arrayOfReservations = new ArrayList<Reservation>();
+
+        final ReservationListViewAdapter adapter = new ReservationListViewAdapter(this,arrayOfReservations);
+
+        ListView listView = (ListView) findViewById(R.id.reservationListView);
+        listView.setAdapter(adapter);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("userReservations");
+        query.whereEqualTo("userId",currentUser.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < list.size(); i++) {
+                        Reservation newReservation = new Reservation(list.get(i).getString("RestaurantName"), list.get(i).getString("numberOfPeople"), list.get(i).getString("Time"), list.get(i).getString("Date"));
+                        adapter.add(newReservation);
+                    }
+                    adapter.notifyDataSetChanged();
+                }else{
+                    Log.e("Parse query: ",e.getMessage());
+                }
+            }
+        });
+
+
+
     }
 }
