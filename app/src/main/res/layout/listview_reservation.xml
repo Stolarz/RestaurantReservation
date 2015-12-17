@@ -8,13 +8,13 @@
         android:id="@+id/resName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="\zx"/>
 
     <TextView
         android:id="@+id/resAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="c "/>
 
     <TextView
         android:id="@+id/resDate"

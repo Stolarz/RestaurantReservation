@@ -99,10 +99,9 @@ private String username;
 
         ArrayList<Reservation> arrayOfReservations = new ArrayList<Reservation>();
 
-        final ReservationListViewAdapter adapter = new ReservationListViewAdapter(this,arrayOfReservations);
+        final ReservationListViewAdapter adapter = new ReservationListViewAdapter(DisplayUser.this,arrayOfReservations);
 
-        ListView listView = (ListView) findViewById(R.id.reservationListView);
-        listView.setAdapter(adapter);
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("userReservations");
         query.whereEqualTo("userId",currentUser.getObjectId());
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -110,17 +109,18 @@ private String username;
             public void done(List<ParseObject> list, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < list.size(); i++) {
-                        Reservation newReservation = new Reservation(list.get(i).getString("RestaurantName"), list.get(i).getString("numberOfPeople"), list.get(i).getString("Time"), list.get(i).getString("Date"));
+                        Reservation newReservation = new Reservation(list.get(i).getString("RestaurantName"), list.get(i).getNumber("numberOfPeople").toString(), list.get(i).getString("Time"), list.get(i).getString("Date"));
                         adapter.add(newReservation);
                     }
                     adapter.notifyDataSetChanged();
-                }else{
-                    Log.e("Parse query: ",e.getMessage());
+                } else {
+                    Log.e("Parse query: ", e.getMessage());
                 }
             }
         });
 
-
+        ListView listView = (ListView) findViewById(R.id.reservationListView);
+        listView.setAdapter(adapter);
 
     }
 }

@@ -36,12 +36,13 @@ public class MakeReservationActivity extends AppCompatActivity implements
     private String time;
     private String restaurantName;
     private Number pickerValue;
+    ParseUser currentUser = new ParseUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_reservation);
         Bundle extras = getIntent().getExtras();
-        final ParseUser currentUser = new ParseUser();
+
         restaurantName = extras.getString("RESTAURANT_NAME");
         maxReservation = extras.getString("MAX");
         Log.e("MAX",""+maxReservation);
@@ -123,7 +124,7 @@ public class MakeReservationActivity extends AppCompatActivity implements
                 object.put("Time",time);
                 object.put("numberOfPeople",pickerValue);
                 object.put("RestaurantName",restaurantName);
-                object.put("userId",currentUser.getObjectId());
+                object.put("userId", currentUser.getObjectId());
                 object.saveInBackground();
             }
         });
