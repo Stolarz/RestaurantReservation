@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Restaurant Reservation by Stolarz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Restaurant Reservation</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/Stolarz/RestaurantReservation" class="btn">View on GitHub</a>
+      <a href="https://github.com/Stolarz/RestaurantReservation/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Stolarz/RestaurantReservation/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="restaurantreservation" class="anchor" href="#restaurantreservation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>RestaurantReservation</h1>
+
+<h3>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Features</h3>
+
+<ul>
+<li>Restaurants list</li>
+<li>Registration of user account</li>
+<li>User account profile page</li>
+<li>Making reservation page</li>
+<li>Showing restaurant on map</li>
+</ul>
+
+<h3>
+<a id="sample-code" class="anchor" href="#sample-code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sample code</h3>
+
+<pre><code>  public class MakeReservationActivity extends AppCompatActivity implements
+    TimePickerDialog.OnTimeSetListener,
+    DatePickerDialog.OnDateSetListener
+ {
+ private TextView timeTextView;
+ private TextView dateTextView;
+ private String maxReservation;
+ private String date;
+ private String time;
+ private String restaurantName;
+ private Number pickerValue;
+  ParseUser currentUser = ParseUser.getCurrentUser();
+  @Override
+   protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.activity_make_reservation);
+    Bundle extras = getIntent().getExtras();
+    Log.e("ID: ",""+currentUser.getObjectId().toString());
+    restaurantName = extras.getString("RESTAURANT_NAME");
+    maxReservation = extras.getString("MAX");
+    Log.e("MAX",""+maxReservation);
+    timeTextView = (TextView)findViewById(R.id.time_textview);
+    dateTextView = (TextView)findViewById(R.id.date_textview);
+    Button timeButton = (Button)findViewById(R.id.time_button);
+    Button dateButton = (Button)findViewById(R.id.date_button);
+    Button peopleButton = (Button)findViewById(R.id.people_button);
+    Button reservationButton = (Button)findViewById(R.id.make_reservation);
+    // Show a timepicker when the timeButton is clicked
+    timeButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Calendar now = Calendar.getInstance();
+            TimePickerDialog tpd = TimePickerDialog.newInstance(
+                    MakeReservationActivity.this,
+                    now.get(Calendar.HOUR_OF_DAY),
+                    now.get(Calendar.MINUTE),
+                    true
+            );
+
+            tpd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    Log.d("TimePicker", "Dialog was cancelled");
+                }
+            });
+            tpd.show(getFragmentManager(), "Timepickerdialog");
+        }
+    });
+
+    // Show a datepicker when the dateButton is clicked
+    dateButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    MakeReservationActivity.this,
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+
+
+            dpd.show(getFragmentManager(), "Datepickerdialog");
+        }
+    });
+
+peopleButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MakeReservationActivity.this);
+        View view2 = getLayoutInflater().inflate(R.layout.dialog,null);
+        builder.setView(view2);
+        final NumberPicker picker = (NumberPicker) view2.findViewById (R.id.numberPicker1);
+        builder.setTitle("Wybierz ilość osób");
+        picker.setMinValue(1);
+        picker.setMaxValue(Integer.parseInt(maxReservation));
+
+        builder.setPositiveButton("Wybierz", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            pickerValue = picker.getValue();
+            }
+        });
+        builder.setNegativeButton("Anuluj", null);
+        final AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.show();
+    }
+});
+
+
+    reservationButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            ParseObject object = new ParseObject("userReservations");
+            object.put("Date",date);
+            object.put("Time",time);
+            object.put("numberOfPeople",pickerValue);
+            object.put("RestaurantName",restaurantName);
+            object.put("userId", currentUser.getObjectId());
+            Log.e("ID: ", "" + currentUser.getObjectId().toString());
+            object.saveInBackground();
+        }
+    });
+
+}
+@Override
+public void onResume() {
+    super.onResume();
+    TimePickerDialog tpd = (TimePickerDialog) getFragmentManager().findFragmentByTag("Timepickerdialog");
+    DatePickerDialog dpd = (DatePickerDialog) getFragmentManager().findFragmentByTag("Datepickerdialog");
+
+    if(tpd != null) tpd.setOnTimeSetListener(this);
+    if(dpd != null) dpd.setOnDateSetListener(this);
+}
+
+@Override
+public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+    String hourString = hourOfDay &lt; 10 ? "0"+hourOfDay : ""+hourOfDay;
+    String minuteString = minute &lt; 10 ? "0"+minute : ""+minute;
+    time = hourString+"h"+minuteString+"m";
+    timeTextView.setText("You picked the following time: "+time);
+}
+
+@Override
+public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+    date = dayOfMonth+"/"+(++monthOfYear)+"/"+year;
+    dateTextView.setText("You picked the following date: "+date);
+}
+</code></pre>
+
+<p>}</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Stolarz/RestaurantReservation">Restaurant Reservation</a> is maintained by <a href="https://github.com/Stolarz">Stolarz</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
